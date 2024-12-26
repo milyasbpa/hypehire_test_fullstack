@@ -1,6 +1,5 @@
 import * as React from "react";
 import clsx from "clsx";
-import Image from "next/image";
 import SVGIcon from "@/core/ui/icons";
 import { SidebarApp } from "../fragments/sidebar";
 
