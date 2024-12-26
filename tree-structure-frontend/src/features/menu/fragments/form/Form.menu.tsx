@@ -36,7 +36,7 @@ export const FormMenu = () => {
       <div
         className={clsx(
           "grid grid-cols-1 place-content-start place-items-start gap-[1.25rem]",
-          "w-full max-w-[262px]"
+          "w-full sm:max-w-[262px]"
         )}
       >
         <Textfield
