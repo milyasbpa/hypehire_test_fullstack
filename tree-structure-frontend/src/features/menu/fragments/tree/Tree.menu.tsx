@@ -9,6 +9,7 @@ import { filterFlatList } from "@/core/utils/tree";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { v4 as uuidV4 } from "uuid";
 
 export const TreeMenu = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ export const TreeMenu = () => {
 
   const handleAddMenu = (parentId: string) => {
     const newMenu = {
-      id: "",
+      id: uuidV4(),
       name: "",
       parentId: parentId,
       depth: (menuItems.find((item) => item.id === parentId)?.depth ?? 0) + 1,

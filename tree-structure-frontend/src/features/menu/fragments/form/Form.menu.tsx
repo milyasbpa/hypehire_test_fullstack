@@ -10,7 +10,6 @@ import {
   setMenu,
   setNewMenu,
 } from "@/core/module/app/redux/store/menuSlice.app";
-import { v4 as uuidV4 } from "uuid";
 
 export const FormMenu = () => {
   const dispatch = useDispatch();
@@ -30,15 +29,7 @@ export const FormMenu = () => {
   };
 
   const handleClickSave = () => {
-    dispatch(
-      setMenu([
-        ...menuItems,
-        {
-          ...newMenu,
-          id: uuidV4(),
-        },
-      ])
-    );
+    dispatch(setMenu([...menuItems, newMenu]));
     dispatch(setNewMenu(null));
   };
   return (
@@ -54,10 +45,7 @@ export const FormMenu = () => {
           "w-full"
         )}
       >
-        <MenuIdMenu
-          label="Menu ID"
-          value="56320ee9-6af6-11ed-a7ba-f220afe5e4a9"
-        />
+        <MenuIdMenu label="Menu ID" value={newMenu.id} />
       </div>
 
       <div
