@@ -31,7 +31,6 @@ export const ParentSelectorMenu = () => {
     dispatch(setExpandedNodes({}));
   };
 
-  console.log(activeMenu, "ini activemenu");
   return (
     <div className={clsx("max-w-[348px] w-full")}>
       <Dropdown

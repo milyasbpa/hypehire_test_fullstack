@@ -4,6 +4,7 @@ import React from "react";
 import clsx from "clsx";
 import { Chevron } from "../../icons/chevron";
 import { buildTree } from "@/core/utils/tree";
+import SVGIcon from "../../icons";
 
 export type MenuItem = MenuItemComponent;
 
@@ -66,8 +67,23 @@ const Tree: React.FC<TreeProps> = ({
             )}
             <span>{node.name}</span>
             {maxDepth === node.depth && (
-              <button className="text-blue-500" onClick={() => onAdd(node.id)}>
-                +
+              <button
+                className={clsx(
+                  "flex items-center justify-center",
+                  "w-[26px] h-[26px]",
+                  "bg-[#253BFF]",
+                  "rounded-[50%]",
+                  "cursor-pointer"
+                )}
+                onClick={() => onAdd(node.id)}
+              >
+                <SVGIcon
+                  name="Trailing"
+                  className={clsx(
+                    "w-[0.875rem] h-[0.875rem]",
+                    "stroke-[white]"
+                  )}
+                />
               </button>
             )}
           </div>
