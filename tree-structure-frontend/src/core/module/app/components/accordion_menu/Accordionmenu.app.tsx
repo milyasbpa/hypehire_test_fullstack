@@ -3,7 +3,7 @@ import * as React from "react";
 import clsx from "clsx";
 import SVGIcon from "@/core/ui/icons";
 import { useOnClickOutside } from "usehooks-ts";
-import { MenuItem, MenuItemComponent } from "../../redux/store/menuSlice.app";
+import { MenuItemComponent } from "../../redux/store/menuSlice.app";
 
 export interface AccordionMenuAppProps {
   menuItem?: MenuItemComponent;
