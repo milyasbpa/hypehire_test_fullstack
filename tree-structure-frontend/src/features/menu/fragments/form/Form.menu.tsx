@@ -41,6 +41,7 @@ export const FormMenu = () => {
         },
       ])
     );
+    dispatch(setNewMenu(null));
   };
   return (
     <div
