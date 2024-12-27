@@ -3,18 +3,11 @@ import * as React from "react";
 import clsx from "clsx";
 import SVGIcon from "@/core/ui/icons";
 import { useOnClickOutside } from "usehooks-ts";
-
-type MenuItem = {
-  id: string;
-  name: string;
-  parentId: string | null; // `null` for root items
-  depth: number;
-  children?: MenuItem[]; // For nesting
-};
+import { MenuItem, MenuItemComponent } from "../../redux/store/menuSlice.app";
 
 export interface AccordionMenuAppProps {
-  menuItem?: MenuItem;
-  submenuItems?: MenuItem[];
+  menuItem?: MenuItemComponent;
+  submenuItems?: MenuItemComponent[];
 }
 
 export const AccordionMenuApp = ({
@@ -23,6 +16,8 @@ export const AccordionMenuApp = ({
     name: "",
     parentId: null,
     depth: 1,
+    createdAt: "",
+    updatedAt: "",
   },
   submenuItems = [],
 }: AccordionMenuAppProps) => {

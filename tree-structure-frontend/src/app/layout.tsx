@@ -1,6 +1,8 @@
+"use client";
 import type { Metadata } from "next";
 import "./globals.css";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import ReduxProvider from "@/core/module/app/redux/store/provider.app";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"], // Adjust subsets as needed
@@ -21,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.className} antialiased`}>
-        {children}
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

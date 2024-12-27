@@ -1,45 +1,13 @@
+"use client";
 import * as React from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { AccordionMenuApp } from "../../components/accordion_menu";
-
-type MenuItem = {
-  id: string;
-  name: string;
-  parentId: string | null; // `null` for root items
-  depth: number;
-  children?: MenuItem[]; // For nesting
-};
-
-const menuItems: MenuItem[] = [
-  { id: "1", name: "Systems", parentId: null, depth: 1 },
-
-  { id: "2", name: "System Code", parentId: "1", depth: 2 },
-  { id: "3", name: "Code Registration", parentId: "2", depth: 3 },
-
-  { id: "4", name: "Code Registration-2", parentId: "1", depth: 2 },
-  { id: "5", name: "Properties", parentId: "1", depth: 2 },
-
-  { id: "6", name: "Menus", parentId: "1", depth: 2 },
-  { id: "7", name: "MenusRegistration", parentId: "6", depth: 3 },
-
-  { id: "8", name: "API List", parentId: "1", depth: 2 },
-  { id: "9", name: "API Registration", parentId: "8", depth: 3 },
-  { id: "10", name: "API Edit", parentId: "8", depth: 3 },
-
-  { id: "11", name: "Users & Groups", parentId: null, depth: 1 },
-
-  { id: "12", name: "Users", parentId: "11", depth: 2 },
-  { id: "13", name: "User Account Registration", parentId: "12", depth: 3 },
-
-  { id: "14", name: "Group", parentId: "11", depth: 2 },
-  { id: "15", name: "User Group Registration", parentId: "14", depth: 3 },
-
-  { id: "16", name: "사용자 승인", parentId: "11", depth: 2 },
-  { id: "17", name: "사용자 승인 상세", parentId: "16", depth: 3 },
-];
+import { RootState } from "../../redux/store/store.app";
+import { useSelector } from "react-redux";
 
 export const SidebarApp = () => {
+  const menuItems = useSelector((state: RootState) => state.menu.menu);
   const orderedMenus = menuItems.filter((menu) => menu.depth <= 2);
   const parentMenuItems = orderedMenus.filter((menu) => !menu.parentId);
   return (

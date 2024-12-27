@@ -1,13 +1,8 @@
 "use client";
+import { MenuItemComponent } from "@/core/module/app/redux/store/menuSlice.app";
 import React from "react";
 
-type MenuItem = {
-  id: string;
-  name: string;
-  parentId: string | null;
-  depth: number;
-  children?: MenuItem[];
-};
+export type MenuItem = MenuItemComponent;
 
 type TreeProps = {
   items: MenuItem[];
@@ -49,8 +44,8 @@ const Tree: React.FC<TreeProps> = ({ items, onAdd }) => {
     sortedItems.forEach((item) => {
       if (item.parentId === null) {
         roots.push(map[item.id]);
-      } else if (map[item.parentId]) {
-        map[item.parentId].children!.push(map[item.id]);
+      } else if (map[item?.parentId ?? ""]) {
+        map[item?.parentId ?? ""].children!.push(map[item.id]);
       }
     });
 
