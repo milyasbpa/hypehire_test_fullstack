@@ -14,7 +14,6 @@ export const ParentSelectorMenu = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state: RootState) => state.menu.menu);
   const activeMenu = useSelector((state: RootState) => state.menu.activeMenu);
-
   const parentMenus = menuItems.filter((item) => !item.parentId);
   React.useEffect(() => {
     if (!!menuItems.length) {

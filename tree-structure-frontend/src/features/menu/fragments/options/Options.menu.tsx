@@ -8,6 +8,7 @@ import {
   setExpandedNodes,
   setMenuOption,
 } from "@/core/module/app/redux/store/menuSlice.app";
+import { getChildren } from "@/core/utils/tree";
 
 const options = [
   {
@@ -23,22 +24,32 @@ export const OptionsMenu = () => {
   const dispatch = useDispatch();
   const menuItems = useSelector((state: RootState) => state.menu.menu);
   const menuOption = useSelector((state: RootState) => state.menu.menuOption);
+  const activeMenu = useSelector((state: RootState) => state.menu.activeMenu);
 
   React.useEffect(() => {
-    const menuIds = menuItems.map((item) => item.id);
-    const obj = menuIds.reduce((acc, item) => {
-      return {
-        ...acc,
-        [`${item}`]: true,
-      };
-    }, {});
-    dispatch(setExpandedNodes(obj));
-    dispatch(setMenuOption(options[0]));
-  }, []);
+    if (!!activeMenu) {
+      const treeFilteredMenu = getChildren(activeMenu, menuItems);
+      const menuIds = treeFilteredMenu.map((item) => item.id);
+      const obj = menuIds.reduce((acc, item) => {
+        return {
+          ...acc,
+          [`${item}`]: true,
+        };
+      }, {});
+      dispatch(setExpandedNodes(obj));
+      dispatch(setMenuOption(options[0]));
+    }
+  }, [activeMenu]);
+
+  if (!activeMenu) {
+    return;
+  }
+
+  const treeFilteredMenu = getChildren(activeMenu, menuItems);
 
   const handleSelectOption = (data: { id: string; name: string }) => {
     if (data.id === "expand") {
-      const menuIds = menuItems.map((item) => item.id);
+      const menuIds = treeFilteredMenu.map((item) => item.id);
       const obj = menuIds.reduce((acc, item) => {
         return {
           ...acc,

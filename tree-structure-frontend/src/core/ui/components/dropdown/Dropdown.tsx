@@ -53,7 +53,7 @@ export const Dropdown = ({
           >
             <SVGIcon
               name={"Chevron"}
-              className={clsx("w-[1.25rem] h-[1.25rem]", "fill-go-green")}
+              className={clsx("w-[1.25rem] h-[1.25rem]", "stroke-[#101828]")}
             />
           </span>
         </ListboxButton>
