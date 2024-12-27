@@ -19,7 +19,7 @@ export const ParentSelectorMenu = () => {
     if (!!menuItems.length) {
       dispatch(setActiveMenu(parentMenus[0]));
     }
-  }, [menuItems]);
+  }, [menuItems, parentMenus, dispatch]);
 
   const handleSelectMenu = (data: { id: string; name: string }) => {
     const selectedMenu = menuItems.find((item) => item.id === data.id);

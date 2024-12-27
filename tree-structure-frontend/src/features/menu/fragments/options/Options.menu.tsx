@@ -8,7 +8,7 @@ import {
   setExpandedNodes,
   setMenuOption,
 } from "@/core/module/app/redux/store/menuSlice.app";
-import { getChildren } from "@/core/utils/tree";
+import { filterFlatList } from "@/core/utils/tree";
 
 const options = [
   {
@@ -28,7 +28,7 @@ export const OptionsMenu = () => {
 
   React.useEffect(() => {
     if (!!activeMenu) {
-      const treeFilteredMenu = getChildren(activeMenu, menuItems);
+      const treeFilteredMenu = filterFlatList(activeMenu.id, menuItems);
       const menuIds = treeFilteredMenu.map((item) => item.id);
       const obj = menuIds.reduce((acc, item) => {
         return {
@@ -39,13 +39,13 @@ export const OptionsMenu = () => {
       dispatch(setExpandedNodes(obj));
       dispatch(setMenuOption(options[0]));
     }
-  }, [activeMenu]);
+  }, [activeMenu, menuItems, dispatch]);
 
   if (!activeMenu) {
     return;
   }
 
-  const treeFilteredMenu = getChildren(activeMenu, menuItems);
+  const treeFilteredMenu = filterFlatList(activeMenu.id, menuItems);
 
   const handleSelectOption = (data: { id: string; name: string }) => {
     if (data.id === "expand") {
