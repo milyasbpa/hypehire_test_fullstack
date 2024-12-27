@@ -9,18 +9,18 @@ async function bootstrap(): Promise<Server> {
   return app.getHttpAdapter().getInstance(); // Return the HTTP server instance
 }
 
-// Local development entry point
-async function localBootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const port = process.env.PORT || 3000;
-  console.log(`Server running locally on http://localhost:${port}`);
-  await app.listen(port);
-}
+// // Local development entry point
+// async function localBootstrap() {
+//   const app = await NestFactory.create(AppModule);
+//   const port = process.env.PORT || 3000;
+//   console.log(`Server running locally on http://localhost:${port}`);
+//   await app.listen(port);
+// }
 
 // Export serverless function for Vercel
 export default bootstrap;
 
-// Run the local server if executed directly
-if (require.main === module) {
-  localBootstrap();
-}
+// // Run the local server if executed directly
+// if (require.main === module) {
+//   localBootstrap();
+// }
