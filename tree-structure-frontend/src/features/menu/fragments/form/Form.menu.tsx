@@ -6,7 +6,11 @@ import { MenuIdMenu } from "../../components/menu_id";
 import { useSelector } from "react-redux";
 import { RootState } from "@/core/module/app/redux/store/store.app";
 import { useDispatch } from "react-redux";
-import { setNewMenu } from "@/core/module/app/redux/store/menuSlice.app";
+import {
+  setMenu,
+  setNewMenu,
+} from "@/core/module/app/redux/store/menuSlice.app";
+import { v4 as uuidV4 } from "uuid";
 
 export const FormMenu = () => {
   // const [parentData, setParentData] = React.useState<string>("");
@@ -24,6 +28,18 @@ export const FormMenu = () => {
         ...newMenu,
         name: e.currentTarget.value,
       })
+    );
+  };
+
+  const handleClickSave = () => {
+    dispatch(
+      setMenu([
+        ...menuItems,
+        {
+          ...newMenu,
+          id: uuidV4(),
+        },
+      ])
     );
   };
   return (
@@ -82,6 +98,7 @@ export const FormMenu = () => {
           "bg-[#253BFF]",
           "text-[0.875rem] text-[#FFFFFF] font-bold"
         )}
+        onClick={handleClickSave}
       >
         {"Save"}
       </button>

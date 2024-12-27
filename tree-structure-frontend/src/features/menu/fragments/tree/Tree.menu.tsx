@@ -58,7 +58,7 @@ export const TreeMenu = () => {
       createdAt: "",
       updatedAt: "",
     };
-    console.log(menuItems, newMenu, "ini menu items");
+
     dispatch(setNewMenu(newMenu));
   };
 

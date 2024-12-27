@@ -202,6 +202,9 @@ const menuSlice = createSlice({
     setOtherState: (state, action: PayloadAction<string>) => {
       state.otherState = action.payload;
     },
+    setMenu: (state, action: PayloadAction<MenuItem[]>) => {
+      state.menu = action.payload;
+    },
     setActiveMenu: (state, action: PayloadAction<MenuItem>) => {
       state.activeMenu = action.payload;
     },
@@ -240,6 +243,7 @@ const menuSlice = createSlice({
 
 export const {
   setOtherState,
+  setMenu,
   setActiveMenu,
   setNewMenu,
   setMenuOption,
