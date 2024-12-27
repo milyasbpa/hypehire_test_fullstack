@@ -21,6 +21,8 @@ export interface MenuItemComponent {
 
 interface MenuState {
   menu: MenuItem[];
+  activeMenu: MenuItem | null;
+  newMenu: MenuItem | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   otherState: string;
@@ -173,6 +175,8 @@ const initialState: MenuState = {
       updatedAt: "",
     },
   ],
+  activeMenu: null,
+  newMenu: null,
   status: "idle",
   error: null,
   otherState: "",
@@ -194,6 +198,9 @@ const menuSlice = createSlice({
     setOtherState: (state, action: PayloadAction<string>) => {
       state.otherState = action.payload;
     },
+    setActiveMenu: (state, action: PayloadAction<MenuItem>) => {
+      state.activeMenu = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -212,5 +219,5 @@ const menuSlice = createSlice({
   },
 });
 
-export const { setOtherState } = menuSlice.actions;
+export const { setOtherState, setActiveMenu } = menuSlice.actions;
 export default menuSlice.reducer;

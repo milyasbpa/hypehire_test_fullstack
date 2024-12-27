@@ -6,6 +6,7 @@ import { OptionsMenu } from "../fragments/options";
 import { FormMenu } from "../fragments/form";
 import { useSelector } from "react-redux";
 import { RootState } from "@/core/module/app/redux/store/store.app";
+import { ParentSelectorMenu } from "../fragments/parent_selector";
 
 export const MenuContainer = () => {
   const menuItems = useSelector((state: RootState) => state.menu.menu);
@@ -22,6 +23,7 @@ export const MenuContainer = () => {
           "w-full"
         )}
       >
+        <ParentSelectorMenu />
         <OptionsMenu />
         <Tree items={menuItems} />
       </div>
