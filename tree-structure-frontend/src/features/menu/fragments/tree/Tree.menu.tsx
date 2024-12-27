@@ -1,8 +1,11 @@
 "use client";
-import { setExpandedNodes } from "@/core/module/app/redux/store/menuSlice.app";
+import {
+  setExpandedNodes,
+  setNewMenu,
+} from "@/core/module/app/redux/store/menuSlice.app";
 import { RootState } from "@/core/module/app/redux/store/store.app";
 import Tree from "@/core/ui/components/tree/Tree.component";
-import { buildTree, filterFlatList } from "@/core/utils/tree";
+import { filterFlatList } from "@/core/utils/tree";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -46,11 +49,25 @@ export const TreeMenu = () => {
     );
   };
 
+  const handleAddMenu = (parentId: string) => {
+    const newMenu = {
+      id: "",
+      name: "",
+      parentId: parentId,
+      depth: (menuItems.find((item) => item.id === parentId)?.depth ?? 0) + 1,
+      createdAt: "",
+      updatedAt: "",
+    };
+    console.log(menuItems, newMenu, "ini menu items");
+    dispatch(setNewMenu(newMenu));
+  };
+
   return (
     <Tree
       expandedNodes={expandedNodes}
       items={filteredData}
       onToggle={handleToggleMenu}
+      onAdd={handleAddMenu}
     />
   );
 };

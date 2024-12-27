@@ -3,16 +3,28 @@ import * as React from "react";
 import clsx from "clsx";
 import { Textfield } from "@/core/ui/components/textfield";
 import { MenuIdMenu } from "../../components/menu_id";
+import { useSelector } from "react-redux";
+import { RootState } from "@/core/module/app/redux/store/store.app";
+import { useDispatch } from "react-redux";
+import { setNewMenu } from "@/core/module/app/redux/store/menuSlice.app";
 
 export const FormMenu = () => {
-  const [parentData, setParentData] = React.useState<string>("");
-  const [name, setName] = React.useState<string>("");
+  // const [parentData, setParentData] = React.useState<string>("");
+  // const [name, setName] = React.useState<string>("");
+  const dispatch = useDispatch();
+  const menuItems = useSelector((state: RootState) => state.menu.menu);
+  const newMenu = useSelector((state: RootState) => state.menu.newMenu);
+  if (!newMenu) {
+    return <div>Click Add Toggle if you want add menu</div>;
+  }
 
-  const handleChangeParentData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParentData(e.currentTarget.value);
-  };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.currentTarget.value);
+    dispatch(
+      setNewMenu({
+        ...newMenu,
+        name: e.currentTarget.value,
+      })
+    );
   };
   return (
     <div
@@ -42,20 +54,22 @@ export const FormMenu = () => {
         <Textfield
           id="depth"
           label={"Depth"}
-          value={3}
+          value={newMenu.depth}
           type="number"
           disabled
         />
         <Textfield
           id="parent_data"
           label={"Parent Data"}
-          value={parentData}
-          onChange={handleChangeParentData}
+          disabled
+          value={
+            menuItems.find((item) => item.id === newMenu.parentId)?.name ?? ""
+          }
         />
         <Textfield
           id="name"
           label={"Name"}
-          value={name}
+          value={newMenu.name}
           onChange={handleChangeName}
         />
       </div>

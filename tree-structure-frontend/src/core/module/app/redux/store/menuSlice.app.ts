@@ -205,6 +205,9 @@ const menuSlice = createSlice({
     setActiveMenu: (state, action: PayloadAction<MenuItem>) => {
       state.activeMenu = action.payload;
     },
+    setNewMenu: (state, action: PayloadAction<MenuItem>) => {
+      state.newMenu = action.payload;
+    },
     setMenuOption: (
       state,
       action: PayloadAction<{ id: string; name: string }>
@@ -235,6 +238,11 @@ const menuSlice = createSlice({
   },
 });
 
-export const { setOtherState, setActiveMenu, setMenuOption, setExpandedNodes } =
-  menuSlice.actions;
+export const {
+  setOtherState,
+  setActiveMenu,
+  setNewMenu,
+  setMenuOption,
+  setExpandedNodes,
+} = menuSlice.actions;
 export default menuSlice.reducer;
