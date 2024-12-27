@@ -26,8 +26,6 @@ const Tree: React.FC<TreeProps> = ({
     onToggle(id);
   };
 
-  const maxDepth = Math.max(...items.map((item) => item.depth));
-
   const renderTree = (nodes: MenuItem[]) => {
     return nodes.map((node) => {
       const isExpanded = expandedNodes[node.id] ?? false;
@@ -66,7 +64,7 @@ const Tree: React.FC<TreeProps> = ({
               </button>
             )}
             <span>{node.name}</span>
-            {maxDepth === node.depth && (
+            {!hasChildren && (
               <button
                 className={clsx(
                   "flex items-center justify-center",
