@@ -1,6 +1,13 @@
 "use client";
 import * as React from "react";
 import clsx from "clsx";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "@/core/module/app/redux/store/store.app";
+import {
+  setExpandedNodes,
+  setMenuOption,
+} from "@/core/module/app/redux/store/menuSlice.app";
 
 const options = [
   {
@@ -13,10 +20,38 @@ const options = [
   },
 ];
 export const OptionsMenu = () => {
-  const [selectedOption, setSelectedOption] = React.useState<{
-    id: string;
-    name: string;
-  }>(options[0]);
+  const dispatch = useDispatch();
+  const menuItems = useSelector((state: RootState) => state.menu.menu);
+  const menuOption = useSelector((state: RootState) => state.menu.menuOption);
+
+  React.useEffect(() => {
+    const menuIds = menuItems.map((item) => item.id);
+    const obj = menuIds.reduce((acc, item) => {
+      return {
+        ...acc,
+        [`${item}`]: true,
+      };
+    }, {});
+    dispatch(setExpandedNodes(obj));
+    dispatch(setMenuOption(options[0]));
+  }, []);
+
+  const handleSelectOption = (data: { id: string; name: string }) => {
+    if (data.id === "expand") {
+      const menuIds = menuItems.map((item) => item.id);
+      const obj = menuIds.reduce((acc, item) => {
+        return {
+          ...acc,
+          [`${item}`]: true,
+        };
+      }, {});
+      dispatch(setExpandedNodes(obj));
+    } else {
+      dispatch(setExpandedNodes({}));
+    }
+    dispatch(setMenuOption(data));
+  };
+
   return (
     <div
       className={clsx(
@@ -28,18 +63,16 @@ export const OptionsMenu = () => {
         <button
           key={optionIndex}
           className={clsx(
-            option.id === selectedOption.id ? "bg-[#1D2939]" : "bg-[white]",
+            option.id === menuOption?.id ? "bg-[#1D2939]" : "bg-[white]",
             "rounded-[3rem]",
             "px-[2rem] py-[0.75rem]",
             "text-[0.875rem] font-bold",
-            option.id === selectedOption.id ? "text-[white]" : "text-[#1D2939]",
-            option.id === selectedOption.id
+            option.id === menuOption?.id ? "text-[white]" : "text-[#1D2939]",
+            option.id === menuOption?.id
               ? "border border-[#1D2939]"
               : "border border-[#D0D5DD]"
           )}
-          onClick={() => {
-            setSelectedOption(option);
-          }}
+          onClick={() => handleSelectOption(option)}
         >
           {option.name}
         </button>

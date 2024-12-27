@@ -12,8 +12,8 @@ export const Chevron = (props: React.HTMLAttributes<SVGElement>) => {
         {...props}
         // stroke="#475467"
         d="M6 9L12 15L18 9"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
