@@ -25,7 +25,8 @@ export const Textfield = (props: TextfieldProps) => {
           "px-[1rem] py-[1.125rem]",
           "bg-[#F9FAFB] disabled:bg-[#EAECF0]",
           "w-full",
-          "text-[#101828] disabled:text-[#475467] text-[1rem] font-normal"
+          "text-[#101828] disabled:text-[#475467] text-[1rem] font-normal",
+          "outline-none"
         )}
       />
     </div>
