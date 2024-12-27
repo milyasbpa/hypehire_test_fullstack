@@ -23,6 +23,7 @@ interface MenuState {
   menu: MenuItem[];
   activeMenu: MenuItem | null;
   newMenu: MenuItem | null;
+  expandedNodes: Record<string, boolean>;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   otherState: string;
@@ -177,6 +178,7 @@ const initialState: MenuState = {
   ],
   activeMenu: null,
   newMenu: null,
+  expandedNodes: {},
   status: "idle",
   error: null,
   otherState: "",
@@ -201,6 +203,12 @@ const menuSlice = createSlice({
     setActiveMenu: (state, action: PayloadAction<MenuItem>) => {
       state.activeMenu = action.payload;
     },
+    setExpandedNodes: (
+      state,
+      action: PayloadAction<Record<string, boolean>>
+    ) => {
+      state.expandedNodes = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -219,5 +227,6 @@ const menuSlice = createSlice({
   },
 });
 
-export const { setOtherState, setActiveMenu } = menuSlice.actions;
+export const { setOtherState, setActiveMenu, setExpandedNodes } =
+  menuSlice.actions;
 export default menuSlice.reducer;

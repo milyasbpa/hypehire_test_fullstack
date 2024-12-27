@@ -5,7 +5,10 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { RootState } from "@/core/module/app/redux/store/store.app";
 import { useDispatch } from "react-redux";
-import { setActiveMenu } from "@/core/module/app/redux/store/menuSlice.app";
+import {
+  setActiveMenu,
+  setExpandedNodes,
+} from "@/core/module/app/redux/store/menuSlice.app";
 
 export const ParentSelectorMenu = () => {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ export const ParentSelectorMenu = () => {
       return;
     }
     dispatch(setActiveMenu(selectedMenu));
+    dispatch(setExpandedNodes({}));
   };
   return (
     <div className={clsx("max-w-[348px] w-full")}>

@@ -1,25 +1,27 @@
 "use client";
 import { MenuItemComponent } from "@/core/module/app/redux/store/menuSlice.app";
 import React from "react";
+import clsx from "clsx";
+import { Chevron } from "../../icons/chevron";
 
 export type MenuItem = MenuItemComponent;
 
 type TreeProps = {
   items: MenuItem[];
+  expandedNodes?: Record<string, boolean>;
   onAdd?: (parentId: string) => void;
+  onToggle?: (id: string) => void;
 };
 
-const Tree: React.FC<TreeProps> = ({ items, onAdd }) => {
-  const [expandedNodes, setExpandedNodes] = React.useState<
-    Record<string, boolean>
-  >({});
-
+const Tree: React.FC<TreeProps> = ({
+  items = [],
+  expandedNodes = {},
+  onAdd = () => {},
+  onToggle = () => {},
+}) => {
   // Helper function to toggle node expansion
   const toggleNode = (id: string) => {
-    setExpandedNodes((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    onToggle(id);
   };
 
   // Helper function to sort and build a nested tree
@@ -74,7 +76,19 @@ const Tree: React.FC<TreeProps> = ({ items, onAdd }) => {
                 className="text-gray-500 hover:text-gray-700"
                 onClick={() => toggleNode(node.id)}
               >
-                {isExpanded ? "-" : "+"}
+                {isExpanded ? (
+                  <div>
+                    <Chevron
+                      className={clsx("w-[1rem] h-[1rem]", "stroke-[#101828]")}
+                    />
+                  </div>
+                ) : (
+                  <div className={clsx("-rotate-90")}>
+                    <Chevron
+                      className={clsx("w-[1rem] h-[1rem]", "stroke-[#101828]")}
+                    />
+                  </div>
+                )}
               </button>
             )}
             <span>{node.name}</span>

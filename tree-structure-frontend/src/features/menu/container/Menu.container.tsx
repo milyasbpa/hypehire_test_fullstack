@@ -1,15 +1,12 @@
 "use client";
 import * as React from "react";
 import clsx from "clsx";
-import Tree from "@/core/ui/components/tree/Tree.component";
 import { OptionsMenu } from "../fragments/options";
 import { FormMenu } from "../fragments/form";
-import { useSelector } from "react-redux";
-import { RootState } from "@/core/module/app/redux/store/store.app";
 import { ParentSelectorMenu } from "../fragments/parent_selector";
+import { TreeMenu } from "../fragments/tree";
 
 export const MenuContainer = () => {
-  const menuItems = useSelector((state: RootState) => state.menu.menu);
   return (
     <div
       className={clsx(
@@ -25,7 +22,7 @@ export const MenuContainer = () => {
       >
         <ParentSelectorMenu />
         <OptionsMenu />
-        <Tree items={menuItems} />
+        <TreeMenu />
       </div>
 
       <div
