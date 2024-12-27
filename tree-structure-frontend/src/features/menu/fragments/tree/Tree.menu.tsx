@@ -1,11 +1,8 @@
 "use client";
-import {
-  MenuItemComponent,
-  setExpandedNodes,
-} from "@/core/module/app/redux/store/menuSlice.app";
+import { setExpandedNodes } from "@/core/module/app/redux/store/menuSlice.app";
 import { RootState } from "@/core/module/app/redux/store/store.app";
 import Tree from "@/core/ui/components/tree/Tree.component";
-import { buildTree } from "@/core/utils/tree";
+import { buildTree, filterFlatList } from "@/core/utils/tree";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -15,8 +12,20 @@ export const TreeMenu = () => {
   const menuItems = useSelector((state: RootState) => state.menu.menu);
   const activeMenu = useSelector((state: RootState) => state.menu.activeMenu);
 
-  const treeData = buildTree(menuItems);
-  const parentTreeData = treeData.filter((item) => !item.parentId);
+  const sortedData = [...menuItems].sort((a, b) => {
+    // First, compare by depth to ensure the hierarchy level is respected.
+    if (a.depth !== b.depth) {
+      return a.depth - b.depth;
+    }
+
+    // If depth is the same, compare by parentId (null or valid parent).
+    if (a.parentId !== b.parentId) {
+      return (a.parentId || "").localeCompare(b.parentId || "");
+    }
+
+    // Finally, compare by id when both depth and parentId are the same.
+    return a.id.localeCompare(b.id);
+  });
 
   const expandedNodes = useSelector(
     (state: RootState) => state.menu.expandedNodes
@@ -26,7 +35,7 @@ export const TreeMenu = () => {
     return null;
   }
 
-  const treeFilteredData = filterFlatList(activeMenu.id, parentTreeData);
+  const filteredData = filterFlatList(activeMenu.id, sortedData);
 
   const handleToggleMenu = (id: string) => {
     dispatch(
@@ -37,39 +46,10 @@ export const TreeMenu = () => {
     );
   };
 
-  function filterFlatList(
-    rootId: string,
-    allMenus: MenuItemComponent[]
-  ): MenuItemComponent[] {
-    const result: MenuItemComponent[] = [];
-    const visited = new Set<string>();
-
-    // Recursive function to find children
-    function findChildren(parentId: string | null) {
-      allMenus.forEach((menu) => {
-        if (menu.parentId === parentId && !visited.has(menu.id)) {
-          visited.add(menu.id);
-          result.push(menu);
-          findChildren(menu.id); // Recurse to find deeper children
-        }
-      });
-    }
-
-    // Add the root node to the result and find its children
-    const rootNode = allMenus.find((menu) => menu.id === rootId);
-    if (rootNode) {
-      result.push(rootNode);
-      visited.add(rootNode.id);
-      findChildren(rootNode.id);
-    }
-
-    return result;
-  }
-
   return (
     <Tree
       expandedNodes={expandedNodes}
-      items={treeFilteredData}
+      items={filteredData}
       onToggle={handleToggleMenu}
     />
   );

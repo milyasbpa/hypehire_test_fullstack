@@ -28,7 +28,21 @@ export const OptionsMenu = () => {
 
   React.useEffect(() => {
     if (!!activeMenu) {
-      const treeFilteredMenu = filterFlatList(activeMenu.id, menuItems);
+      const sortedData = [...menuItems].sort((a, b) => {
+        // First, compare by depth to ensure the hierarchy level is respected.
+        if (a.depth !== b.depth) {
+          return a.depth - b.depth;
+        }
+
+        // If depth is the same, compare by parentId (null or valid parent).
+        if (a.parentId !== b.parentId) {
+          return (a.parentId || "").localeCompare(b.parentId || "");
+        }
+
+        // Finally, compare by id when both depth and parentId are the same.
+        return a.id.localeCompare(b.id);
+      });
+      const treeFilteredMenu = filterFlatList(activeMenu.id, sortedData);
       const menuIds = treeFilteredMenu.map((item) => item.id);
       const obj = menuIds.reduce((acc, item) => {
         return {
@@ -39,13 +53,27 @@ export const OptionsMenu = () => {
       dispatch(setExpandedNodes(obj));
       dispatch(setMenuOption(options[0]));
     }
-  }, [activeMenu, menuItems, dispatch]);
+  }, [activeMenu]);
 
   if (!activeMenu) {
     return;
   }
 
-  const treeFilteredMenu = filterFlatList(activeMenu.id, menuItems);
+  const sortedData = [...menuItems].sort((a, b) => {
+    // First, compare by depth to ensure the hierarchy level is respected.
+    if (a.depth !== b.depth) {
+      return a.depth - b.depth;
+    }
+
+    // If depth is the same, compare by parentId (null or valid parent).
+    if (a.parentId !== b.parentId) {
+      return (a.parentId || "").localeCompare(b.parentId || "");
+    }
+
+    // Finally, compare by id when both depth and parentId are the same.
+    return a.id.localeCompare(b.id);
+  });
+  const treeFilteredMenu = filterFlatList(activeMenu.id, sortedData);
 
   const handleSelectOption = (data: { id: string; name: string }) => {
     if (data.id === "expand") {

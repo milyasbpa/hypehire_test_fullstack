@@ -19,16 +19,19 @@ export const ParentSelectorMenu = () => {
     if (!!menuItems.length) {
       dispatch(setActiveMenu(parentMenus[0]));
     }
-  }, [menuItems, parentMenus, dispatch]);
+  }, [menuItems]);
 
   const handleSelectMenu = (data: { id: string; name: string }) => {
     const selectedMenu = menuItems.find((item) => item.id === data.id);
+
     if (!selectedMenu) {
       return;
     }
     dispatch(setActiveMenu(selectedMenu));
     dispatch(setExpandedNodes({}));
   };
+
+  console.log(activeMenu, "ini activemenu");
   return (
     <div className={clsx("max-w-[348px] w-full")}>
       <Dropdown

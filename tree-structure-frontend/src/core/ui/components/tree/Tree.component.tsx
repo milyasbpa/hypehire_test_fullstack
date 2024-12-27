@@ -3,6 +3,7 @@ import { MenuItemComponent } from "@/core/module/app/redux/store/menuSlice.app";
 import React from "react";
 import clsx from "clsx";
 import { Chevron } from "../../icons/chevron";
+import { buildTree } from "@/core/utils/tree";
 
 export type MenuItem = MenuItemComponent;
 
@@ -23,6 +24,8 @@ const Tree: React.FC<TreeProps> = ({
   const toggleNode = (id: string) => {
     onToggle(id);
   };
+
+  const maxDepth = Math.max(...items.map((item) => item.depth));
 
   const renderTree = (nodes: MenuItem[]) => {
     return nodes.map((node) => {
@@ -62,7 +65,7 @@ const Tree: React.FC<TreeProps> = ({
               </button>
             )}
             <span>{node.name}</span>
-            {onAdd && (
+            {maxDepth === node.depth && (
               <button className="text-blue-500" onClick={() => onAdd(node.id)}>
                 +
               </button>
@@ -77,7 +80,7 @@ const Tree: React.FC<TreeProps> = ({
     });
   };
 
-  const treeData = items;
+  const treeData = buildTree(items);
 
   return <ul className="tree-container">{renderTree(treeData)}</ul>;
 };
