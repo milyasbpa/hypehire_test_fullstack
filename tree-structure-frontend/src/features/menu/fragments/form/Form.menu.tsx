@@ -13,8 +13,6 @@ import {
 import { v4 as uuidV4 } from "uuid";
 
 export const FormMenu = () => {
-  // const [parentData, setParentData] = React.useState<string>("");
-  // const [name, setName] = React.useState<string>("");
   const dispatch = useDispatch();
   const menuItems = useSelector((state: RootState) => state.menu.menu);
   const newMenu = useSelector((state: RootState) => state.menu.newMenu);
